@@ -1,10 +1,20 @@
 package com.example.robin.okhttpexample;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,9 +29,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // used for Log.d statements
+    private GoogleMap mMap;
     // -----------
     final static String TAG = "AKASHDEEP SINGH";
 
@@ -40,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // 1. Setup the outlet
-        tv = (TextView) findViewById(R.id.textview1);
+       // tv = (TextView) findViewById(R.id.textview1);
     }
     public void getJSONPressed(View view) {
 
@@ -113,4 +124,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        LatLng second = new LatLng(52.083870, 0.016009);
+        mMap.addMarker(new MarkerOptions().position(second).title("Marker in melbourne"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(second));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng( 52.083870,0.016009))
+                .title("This is my title")
+                .snippet("and snippet")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+        LatLng coordinate = new LatLng(-5.1841, -37.3478);
+
+
+
+    }
+
 }
