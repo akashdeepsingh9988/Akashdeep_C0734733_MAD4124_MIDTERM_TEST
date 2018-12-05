@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     // used for Log.d statements
     // -----------
-    final static String TAG = "YOUR_NAME_HERE";
+    final static String TAG = "AKASHDEEP SINGH";
 
 
     // outlets
