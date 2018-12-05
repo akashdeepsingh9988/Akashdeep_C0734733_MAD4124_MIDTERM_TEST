@@ -17,6 +17,7 @@ import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Response;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -100,14 +101,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 // @TODO: Part 4 - Write the code to output the person's latitude and longitude to the screen
                 Log.d(TAG, "The user location changed!");
-                Log.d(TAG,"New location: " + location.toString());
+                Log.d(TAG, "New location: " + location.toString());
 
                 // @TODO: Part 5 - Write the code to save the person's latitude and longitude to the variables
                 userLatitude = location.getLatitude();
                 userLongitude = location.getLongitude();
-                Log.d(TAG,"My lat: " + location.getLatitude());
-                Log.d(TAG,"My lag: " + location.getLongitude());
-
+                Log.d(TAG, "My lat: " + location.getLatitude());
+                Log.d(TAG, "My lag: " + location.getLongitude());
 
 
                 // @TODO: Part 5 - Write the code to save the person's latitude and longitude to the variables
@@ -138,10 +138,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (Build.VERSION.SDK_INT < 23) {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                this.manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this.userLocationListener);
-
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
             }
+            this.manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this.userLocationListener);
 
         }
         // 5b.  This is for phones AFTER Marshmallow
@@ -158,7 +164,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         }
+
+
     }
+
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -303,6 +314,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             //@TODO: Output the instructor NAME + DISTANCE to the textview.
             //String abc = "Your output goes here: " + String.format("%.2f", distance) + " km \n";
+            Toast.makeText(getApplicationContext(),String.format("%.2f", distance),Toast.LENGTH_SHORT).show();
             String abc = this.professors.get(i).getName() + " is " + String.format("%.2f", distance) + " km away \n";
             t.append(abc);
         }
